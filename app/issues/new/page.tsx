@@ -55,6 +55,7 @@ const NewIssuePage = () => {
             await axios.post("/api/issues", data);
             setSuccessfulMessage("Issue has been successfully created!");
             reset();
+            setErrorMessages([]);
           } catch (error) {
             setSuccessfulMessage("");
             const errorData = (error as AxiosError).response
