@@ -18,10 +18,11 @@ interface ErrorResponse {
 }
 
 const NewIssuePage = () => {
-  const { register, handleSubmit, control } = useForm<IssueForm>();
+  const { register, handleSubmit, control, reset } = useForm<IssueForm>();
 
   const [errorMessages, setErrorMessages] = useState<String[]>();
-  const router = useRouter();
+  const [successfulMessage, setSuccessfulMessage] = useState("");
+  // const router = useRouter();
 
   return (
     <div className="max-w-xl">
@@ -32,17 +33,30 @@ const NewIssuePage = () => {
               <Callout.Icon>
                 <InfoCircledIcon />
               </Callout.Icon>
-              <Callout.Text>{mesg}.</Callout.Text>
+              <Callout.Text>{mesg}</Callout.Text>
             </Callout.Root>
           </div>
         ))}
+
+      {successfulMessage && (
+        <div className="mb-3">
+          <Callout.Root color="green">
+            <Callout.Icon>
+              <InfoCircledIcon />
+            </Callout.Icon>
+            <Callout.Text>{successfulMessage}</Callout.Text>
+          </Callout.Root>
+        </div>
+      )}
 
       <form
         onSubmit={handleSubmit(async (data) => {
           try {
             await axios.post("/api/issues", data);
-            router.push("/issues");
+            setSuccessfulMessage("Issue has been successfully created!");
+            reset();
           } catch (error) {
+            setSuccessfulMessage("");
             const errorData = (error as AxiosError).response
               ?.data as ErrorResponse[];
             const errorMessages = errorData.map((item) => item.message);
@@ -57,8 +71,12 @@ const NewIssuePage = () => {
           <Controller
             control={control}
             name="description"
-            render={({ field: { onChange } }) => (
-              <SimpleMDE placeholder="Description" onChange={onChange} />
+            render={({ field: { onChange, value } }) => (
+              <SimpleMDE
+                placeholder="Description"
+                onChange={onChange}
+                value={value as string}
+              />
             )}
           />
           <Button>Submit New Issue</Button>
