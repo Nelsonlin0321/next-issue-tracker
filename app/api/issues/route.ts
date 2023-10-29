@@ -12,11 +12,9 @@ const schema = z.object({
 
 export async function POST(request: NextRequest) {
     const body = await request.json()
-    console.log(body)
     const validation = schema.safeParse(body);
 
   if (!validation.success) {
-        console.log(validation.error.errors);
         return NextResponse.json(validation.error.errors, { status: 400 });
     }
   
