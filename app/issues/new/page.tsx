@@ -1,13 +1,13 @@
 "use client";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
-import { Button, Callout, TextField } from "@radix-ui/themes";
-import { InfoCircledIcon } from "@radix-ui/react-icons";
+import { Button, TextField } from "@radix-ui/themes";
 import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import { AxiosError } from "axios";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
+import CalloutHeader from "@/app/components/CalloutHeader";
 interface IssueForm {
   title: String;
   description: String;
@@ -28,25 +28,13 @@ const NewIssuePage = () => {
     <div className="max-w-xl">
       {errorMessages &&
         errorMessages.map((mesg, index) => (
-          <div key={index} className="mb-3">
-            <Callout.Root color="red">
-              <Callout.Icon>
-                <InfoCircledIcon />
-              </Callout.Icon>
-              <Callout.Text>{mesg}</Callout.Text>
-            </Callout.Root>
-          </div>
+          <CalloutHeader key={index} color="red">
+            {mesg}
+          </CalloutHeader>
         ))}
 
       {successfulMessage && (
-        <div className="mb-3">
-          <Callout.Root color="green">
-            <Callout.Icon>
-              <InfoCircledIcon />
-            </Callout.Icon>
-            <Callout.Text>{successfulMessage}</Callout.Text>
-          </Callout.Root>
-        </div>
+        <CalloutHeader color="green">{successfulMessage}</CalloutHeader>
       )}
 
       <form
