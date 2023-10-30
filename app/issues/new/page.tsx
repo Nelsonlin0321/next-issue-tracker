@@ -10,12 +10,9 @@ import { AxiosError } from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CalloutHeader from "@/app/components/CalloutHeader";
 import { createIssueSchema } from "@/app/validationSchemas";
+import Spinner from "@/app/components/Spinner";
 
 type IssueForm = z.infer<typeof createIssueSchema>;
-
-interface ErrorResponse {
-  message: string;
-}
 
 const NewIssuePage = () => {
   const {
@@ -29,6 +26,7 @@ const NewIssuePage = () => {
   });
 
   const [errorMessage, setErrorMessage] = useState("");
+  const [isSubmitting, setSubmitting] = useState(false);
   const [successfulMessage, setSuccessfulMessage] = useState("");
   // const router = useRouter();
 
@@ -38,6 +36,7 @@ const NewIssuePage = () => {
       <form
         onSubmit={handleSubmit(async (data) => {
           try {
+            setSubmitting(true);
             await axios.post("/api/issues", data);
             setSuccessfulMessage("Issue has been successfully created!");
             reset();
@@ -45,6 +44,8 @@ const NewIssuePage = () => {
           } catch (error) {
             setSuccessfulMessage("");
             setErrorMessage((error as AxiosError).message);
+          } finally {
+            setSubmitting(false);
           }
         })}
       >
@@ -73,6 +74,7 @@ const NewIssuePage = () => {
           }
           <Button onClick={() => setSuccessfulMessage("")}>
             Submit New Issue
+            {isSubmitting && <Spinner />}
           </Button>
         </div>
       </form>
