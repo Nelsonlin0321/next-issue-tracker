@@ -8,6 +8,8 @@ interface Props {
 }
 
 const CalloutHeader = ({ children, color }: Props) => {
+  if (!children) return null;
+
   return (
     <div className="mb-3">
       <Callout.Root color={color}>

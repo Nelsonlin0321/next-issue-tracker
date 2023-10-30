@@ -35,10 +35,7 @@ const NewIssuePage = () => {
 
   return (
     <div className="max-w-xl">
-      {successfulMessage && (
-        <CalloutHeader color="green">{successfulMessage}</CalloutHeader>
-      )}
-
+      {<CalloutHeader color="green">{successfulMessage}</CalloutHeader>}
       <form
         onSubmit={handleSubmit(async (data) => {
           try {
@@ -73,11 +70,11 @@ const NewIssuePage = () => {
               />
             )}
           />
-          {errors.description && (
+          {
             <CalloutHeader color="red">
-              {errors.description.message}
+              {errors.description?.message}
             </CalloutHeader>
-          )}
+          }
           <Button onClick={() => setSuccessfulMessage("")}>
             Submit New Issue
           </Button>
