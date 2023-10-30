@@ -10,7 +10,6 @@ import { AxiosError } from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CalloutHeader from "@/app/components/CalloutHeader";
 import { createIssueSchema } from "@/app/validationSchemas";
-// import { useRouter } from "next/navigation";
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
@@ -29,7 +28,7 @@ const NewIssuePage = () => {
     resolver: zodResolver(createIssueSchema),
   });
 
-  // const [errorMessages, setErrorMessages] = useState<String[]>();
+  const [errorMessage, setErrorMessage] = useState("");
   const [successfulMessage, setSuccessfulMessage] = useState("");
   // const router = useRouter();
 
@@ -42,22 +41,19 @@ const NewIssuePage = () => {
             await axios.post("/api/issues", data);
             setSuccessfulMessage("Issue has been successfully created!");
             reset();
+            setErrorMessage("");
           } catch (error) {
             setSuccessfulMessage("");
-            console.log(error);
-            // const errorData = (error as AxiosError).response
-            //   ?.data as ErrorResponse[];
-            // const errorMessages = errorData.map((item) => item.message);
+            setErrorMessage((error as AxiosError).message);
           }
         })}
       >
         <div className="space-y-3">
+          {<CalloutHeader color="red">{errorMessage}</CalloutHeader>}
           <TextField.Root>
             <TextField.Input placeholder="Issue Title" {...register("title")} />
           </TextField.Root>
-          {errors.title && (
-            <CalloutHeader color="red">{errors.title.message}</CalloutHeader>
-          )}
+          {<CalloutHeader color="red">{errors.title?.message}</CalloutHeader>}
           <Controller
             control={control}
             name="description"
