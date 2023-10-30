@@ -12,6 +12,10 @@ import CalloutHeader from "@/app/components/CalloutHeader";
 import { createIssueSchema } from "@/app/validationSchemas";
 import Spinner from "@/app/components/Spinner";
 
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 type IssueForm = z.infer<typeof createIssueSchema>;
 
 const NewIssuePage = () => {
@@ -28,6 +32,7 @@ const NewIssuePage = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setSubmitting] = useState(false);
   const [successfulMessage, setSuccessfulMessage] = useState("");
+
   // const router = useRouter();
 
   return (
@@ -37,6 +42,7 @@ const NewIssuePage = () => {
         onSubmit={handleSubmit(async (data) => {
           try {
             setSubmitting(true);
+            await delay(1000); // mimic spinner
             await axios.post("/api/issues", data);
             setSuccessfulMessage("Issue has been successfully created!");
             reset();
