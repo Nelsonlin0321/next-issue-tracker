@@ -33,28 +33,27 @@ const NewIssuePage = () => {
   const [isSubmitting, setSubmitting] = useState(false);
   const [successfulMessage, setSuccessfulMessage] = useState("");
 
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      setSubmitting(true);
+      await delay(1000); // mimic spinner
+      await axios.post("/api/issues", data);
+      setSuccessfulMessage("Issue has been successfully created!");
+      reset();
+      setErrorMessage("");
+    } catch (error) {
+      setSuccessfulMessage("");
+      setErrorMessage((error as AxiosError).message);
+    } finally {
+      setSubmitting(false);
+    }
+  });
   // const router = useRouter();
 
   return (
     <div className="max-w-xl">
       {<CalloutHeader color="green">{successfulMessage}</CalloutHeader>}
-      <form
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            setSubmitting(true);
-            await delay(1000); // mimic spinner
-            await axios.post("/api/issues", data);
-            setSuccessfulMessage("Issue has been successfully created!");
-            reset();
-            setErrorMessage("");
-          } catch (error) {
-            setSuccessfulMessage("");
-            setErrorMessage((error as AxiosError).message);
-          } finally {
-            setSubmitting(false);
-          }
-        })}
-      >
+      <form onSubmit={onSubmit}>
         <div className="space-y-3">
           {<CalloutHeader color="red">{errorMessage}</CalloutHeader>}
           <TextField.Root>
