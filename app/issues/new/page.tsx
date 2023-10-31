@@ -1,6 +1,6 @@
 "use client";
 import z from "zod";
-import SimpleMDE from "react-simplemde-editor";
+// import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import { Button, TextField } from "@radix-ui/themes";
 import React, { useState } from "react";
@@ -11,6 +11,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import CalloutHeader from "@/app/components/CalloutHeader";
 import { createIssueSchema } from "@/app/validationSchemas";
 import Spinner from "@/app/components/Spinner";
+import dynamic from "next/dynamic";
+const SimpleMdeEditor = dynamic(() => import("react-simplemde-editor"), {
+  ssr: false,
+});
 
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -65,7 +69,7 @@ const NewIssuePage = () => {
             name="description"
             defaultValue=""
             render={({ field: { onChange, value } }) => (
-              <SimpleMDE
+              <SimpleMdeEditor
                 placeholder="Description"
                 onChange={onChange}
                 value={value as string}
