@@ -14,12 +14,12 @@ model Issue {
   id          Int      @id @default(autoincrement())
   title       String   @db.VarChar(255)
   description String   @db.Text
-  stauts      Stauts   @default(OPEN)
+  status      Status   @default(OPEN)
   createAt    DateTime @default(now())
   updateAt    DateTime @updatedAt
 }
 
-enum Stauts {
+enum Status {
   OPEN
   IN_PROGRESS
   CLOSED
