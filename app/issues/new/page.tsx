@@ -8,9 +8,8 @@ import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
 import { AxiosError } from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
-import CalloutHeader from "@/app/components/CalloutHeader";
+import { CalloutHeader, Spinner } from "@/app/components";
 import { createIssueSchema } from "@/app/validationSchemas";
-import Spinner from "@/app/components/Spinner";
 import dynamic from "next/dynamic";
 const SimpleMdeEditor = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
