@@ -40,7 +40,7 @@ const NewIssuePage = () => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       setSubmitting(true);
-      await delay(1000); // mimic spinner
+      await delay(100); // mimic spinner
       await axios.post("/api/issues", data);
       setSuccessfulMessage("Issue has been successfully created!");
       reset();
@@ -55,7 +55,7 @@ const NewIssuePage = () => {
   // const router = useRouter();
 
   return (
-    <div className="max-w-xl">
+    <div className="max-w-2xl">
       {<CalloutHeader color="green">{successfulMessage}</CalloutHeader>}
       <form onSubmit={onSubmit}>
         <div className="space-y-3">
