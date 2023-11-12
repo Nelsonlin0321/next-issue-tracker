@@ -37,5 +37,5 @@ export async function PATCH(request: NextRequest, { params }: Props) {
         data: { title: body.title, description: body.description,status: updateStatus }
     })
 
-    return NextResponse.json(updateIssue,{ status: 201 });
+    return NextResponse.json(updateIssue,{ status: 200 });
  }
