@@ -1,6 +1,6 @@
 import prisma from "@/prisma/client";
 import { Box, Grid } from "@radix-ui/themes";
-import delay from "delay";
+// import delay from "delay";
 import { notFound } from "next/navigation";
 import EditButton from "./EditButton";
 import IssueDetails from "./IssueDetails";
@@ -10,7 +10,7 @@ interface Props {
 }
 
 const IssueDetailPage = async ({ params }: Props) => {
-  await delay(1000);
+  // await delay(1000);
 
   const id = parseInt(params.id);
 

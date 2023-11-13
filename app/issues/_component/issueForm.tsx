@@ -60,7 +60,7 @@ const IssueForm = ({ issue }: Props) => {
   const onSubmit = handleSubmit(async (data) => {
     try {
       setSubmitting(true);
-      await delay(100); // mimic spinner
+      // await delay(100); // mimic spinner
       if (issue) {
         const updatedData = { ...data, status: statusQuery.status };
         await axios.patch(`/api/issues/${issue.id}`, updatedData);
