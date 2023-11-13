@@ -69,6 +69,7 @@ const IssueForm = ({ issue }: Props) => {
         const updatedData = { ...data, status: statusQuery.status };
         await axios.patch(`/api/issues/${issue.id}`, updatedData);
         router.push(`/issues/${issue.id}`);
+        router.refresh();
       } else {
         await axios.post("/api/issues", data);
       }
