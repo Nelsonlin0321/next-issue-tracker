@@ -1,6 +1,6 @@
 "use client";
 import z from "zod";
-// import SimpleMDE from "react-simplemde-editor";
+import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
 import { Button, DropdownMenu, TextField } from "@radix-ui/themes";
 import React, { useState } from "react";
@@ -10,15 +10,11 @@ import { AxiosError } from "axios";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalloutHeader, Spinner } from "@/app/components";
 import { issueSchema } from "@/app/validationSchemas";
-import dynamic from "next/dynamic";
 import { Issue, Status } from "@prisma/client";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import statusMap from "@/app/components/statusMap";
 import DropdownStatusItem from "./dropdownStatusItem";
 import { useRouter } from "next/navigation";
-const SimpleMdeEditor = dynamic(() => import("react-simplemde-editor"), {
-  ssr: false,
-});
 
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -131,7 +127,7 @@ const IssueForm = ({ issue }: Props) => {
             name="description"
             defaultValue={issue ? issue.description : ""}
             render={({ field: { onChange, value } }) => (
-              <SimpleMdeEditor
+              <SimpleMDE
                 placeholder="Description"
                 onChange={onChange}
                 value={value as string}
