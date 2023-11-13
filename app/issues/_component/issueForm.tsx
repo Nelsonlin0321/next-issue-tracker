@@ -15,6 +15,7 @@ import { Issue, Status } from "@prisma/client";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 import statusMap from "@/app/components/statusMap";
 import DropdownStatusItem from "./dropdownStatusItem";
+import { useRouter } from "next/navigation";
 const SimpleMdeEditor = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
 });
@@ -39,6 +40,8 @@ const IssueForm = ({ issue }: Props) => {
   } = useForm<IssueFormData>({
     resolver: zodResolver(issueSchema),
   });
+
+  const router = useRouter();
 
   const [statusQuery, setStatusQuery] = useState({
     status: issue && issue.status,
@@ -65,11 +68,11 @@ const IssueForm = ({ issue }: Props) => {
       if (issue) {
         const updatedData = { ...data, status: statusQuery.status };
         await axios.patch(`/api/issues/${issue.id}`, updatedData);
+        router.push(`/issues/${issue.id}`);
       } else {
         await axios.post("/api/issues", data);
       }
-      const method = issue ? "updated" : "created";
-      setSuccessfulMessage(`Issue has been successfully ${method}!`);
+      setSuccessfulMessage(`Issue has been successfully created!`);
       reset();
       setErrorMessage("");
     } catch (error) {
@@ -79,7 +82,6 @@ const IssueForm = ({ issue }: Props) => {
       setSubmitting(false);
     }
   });
-  // const router = useRouter();
 
   return (
     <div className="max-w-2xl">
@@ -126,7 +128,7 @@ const IssueForm = ({ issue }: Props) => {
           <Controller
             control={control}
             name="description"
-            defaultValue={issue?.description}
+            defaultValue={issue ? issue.description : ""}
             render={({ field: { onChange, value } }) => (
               <SimpleMdeEditor
                 placeholder="Description"
