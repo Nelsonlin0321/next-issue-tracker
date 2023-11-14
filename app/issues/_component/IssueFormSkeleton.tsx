@@ -11,7 +11,7 @@ const IssueFormSkeleton = ({ formType }: Props) => {
   const margin = "3";
   return (
     <Box className="max-w-2xl">
-      <Skeleton height={skeletonHeight} className={`my-${margin}`} />
+      <Skeleton height={skeletonHeight} className={`mb-${margin}`} />
       {formType === "Preview" && (
         <Flex gap="2" className={`mb-${margin}`}>
           <Skeleton width="2rem" height={skeletonHeight} />
