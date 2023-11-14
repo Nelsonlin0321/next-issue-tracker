@@ -3,7 +3,7 @@ import { Button } from "@radix-ui/themes";
 import Link from "next/link";
 import React from "react";
 
-const EditButton = ({ issueId }: { issueId: number }) => {
+const EditIssueButton = ({ issueId }: { issueId: number }) => {
   return (
     <Button>
       <Pencil2Icon />
@@ -12,4 +12,4 @@ const EditButton = ({ issueId }: { issueId: number }) => {
   );
 };
 
-export default EditButton;
+export default EditIssueButton;
