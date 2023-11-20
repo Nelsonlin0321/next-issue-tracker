@@ -7,36 +7,34 @@ import { Skeleton } from "@/app/components";
 import toast, { Toaster } from "react-hot-toast";
 
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
-  const {
-    data: users,
-    error,
-    isLoading,
-  } = useQuery({
-    queryKey: ["users"],
-    queryFn: async () => {
-      const res = await axios.get<User[]>("/api/users");
-      return res.data;
-    },
-    retry: 3,
-    staleTime: 60 * 1000,
-  });
+  const useUsers = () =>
+    useQuery({
+      queryKey: ["users"],
+      queryFn: () => axios.get<User[]>("/api/users").then((res) => res.data),
+      retry: 3,
+      staleTime: 60 * 1000,
+    });
+
+  const { data: users, error, isLoading } = useUsers();
 
   if (isLoading) return <Skeleton />;
   if (error) return null;
+
+  const assignIssue = (userId: string) => {
+    axios
+      .patch(`/api/issues/${issue.id}`, {
+        assignedToUserId: userId === "null" ? null : userId,
+      })
+      .catch(() => {
+        toast.error("Changes could not be saved.");
+      });
+  };
 
   return (
     <>
       <Select.Root
         defaultValue={issue.assignedToUserId || "null"}
-        onValueChange={async (userId) => {
-          axios
-            .patch(`/api/issues/${issue.id}`, {
-              assignedToUserId: userId === "null" ? null : userId,
-            })
-            .catch(() => {
-              toast.error("Changes could not be saved");
-            });
-        }}
+        onValueChange={assignIssue}
       >
         <Select.Trigger placeholder="Assign..." />
         <Select.Content>
