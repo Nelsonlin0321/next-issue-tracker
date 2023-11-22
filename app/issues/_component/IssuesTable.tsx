@@ -3,7 +3,6 @@ import { ArrowUpIcon } from "@radix-ui/react-icons";
 import { Table } from "@radix-ui/themes";
 import NextLink from "next/link";
 import { IssueStatusBadge, Link } from "../../components";
-import SortColumns from "./SortColumns";
 interface Props {
   issues: Issue[];
   searchParams: { status: Status; orderBy: keyof Issue };
@@ -14,7 +13,7 @@ const IssuesTable = async ({ issues, searchParams }: Props) => {
     <Table.Root variant="surface" mb="2">
       <Table.Header>
         <Table.Row>
-          {SortColumns.map((col) => (
+          {columns.map((col) => (
             <Table.ColumnHeaderCell className={col.className} key={col.value}>
               <NextLink
                 href={{
@@ -52,5 +51,17 @@ const IssuesTable = async ({ issues, searchParams }: Props) => {
     </Table.Root>
   );
 };
+
+const columns: { label: string; value: keyof Issue; className?: string }[] = [
+  { label: "Issue", value: "title" },
+  { label: "Status", value: "status", className: "hidden md:table-cell" },
+  {
+    label: "Created",
+    value: "createAt",
+    className: "hidden md:table-cell",
+  },
+];
+
+export const columnNames = columns.map((col) => col.value);
 
 export default IssuesTable;

@@ -6,7 +6,7 @@ import IssueStatusFilter from "./_component/IssueStatusFilter";
 import { Issue, Status } from "@prisma/client";
 import Pagination from "../components/Pagination";
 import prisma from "@/prisma/client";
-import SortColumns from "./_component/SortColumns";
+import { columnNames } from "./_component/IssuesTable";
 
 const pageSize = 10;
 
@@ -21,9 +21,7 @@ const IssuePage = async ({ searchParams }: Props) => {
     ? searchParams.status
     : undefined;
 
-  const orderBy = SortColumns.map((col) => col.value).includes(
-    searchParams.orderBy
-  )
+  const orderBy = columnNames.includes(searchParams.orderBy)
     ? { [searchParams.orderBy]: "asc" }
     : undefined;
 
