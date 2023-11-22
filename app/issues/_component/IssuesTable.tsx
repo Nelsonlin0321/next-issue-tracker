@@ -1,46 +1,20 @@
-import React from "react";
-import { Table } from "@radix-ui/themes";
-import prisma from "@/prisma/client";
-import { IssueStatusBadge, Link } from "../../components";
-import { Status } from "@prisma/client";
-import { Issue } from "@prisma/client";
-import NextLink from "next/link";
+import { Issue, Status } from "@prisma/client";
 import { ArrowUpIcon } from "@radix-ui/react-icons";
+import { Table } from "@radix-ui/themes";
+import NextLink from "next/link";
+import { IssueStatusBadge, Link } from "../../components";
+import SortColumns from "./SortColumns";
 interface Props {
+  issues: Issue[];
   searchParams: { status: Status; orderBy: keyof Issue };
 }
 
-const statuses = Object.values(Status);
-
-const IssuesTable = async ({ searchParams }: Props) => {
-  const status = statuses.includes(searchParams.status)
-    ? searchParams.status
-    : undefined;
-
-  const columns: { label: string; value: keyof Issue; className?: string }[] = [
-    { label: "Issue", value: "title" },
-    { label: "Status", value: "status", className: "hidden md:table-cell" },
-    {
-      label: "Created",
-      value: "createAt",
-      className: "hidden md:table-cell",
-    },
-  ];
-
-  const orderBy = columns.map((col) => col.value).includes(searchParams.orderBy)
-    ? { [searchParams.orderBy]: "asc" }
-    : undefined;
-
-  const issues = await prisma.issue.findMany({
-    where: { status: status },
-    orderBy: orderBy,
-  });
-
+const IssuesTable = async ({ issues, searchParams }: Props) => {
   return (
-    <Table.Root variant="surface">
+    <Table.Root variant="surface" mb="2">
       <Table.Header>
         <Table.Row>
-          {columns.map((col) => (
+          {SortColumns.map((col) => (
             <Table.ColumnHeaderCell className={col.className} key={col.value}>
               <NextLink
                 href={{
