@@ -3,14 +3,20 @@ import { ArrowUpIcon } from "@radix-ui/react-icons";
 import { Table } from "@radix-ui/themes";
 import NextLink from "next/link";
 import { IssueStatusBadge, Link } from "../../components";
+
+export interface IssueQuery {
+  status: Status;
+  orderBy: keyof Issue;
+  page: string;
+}
 interface Props {
   issues: Issue[];
-  searchParams: { status: Status; orderBy: keyof Issue };
+  searchParams: IssueQuery;
 }
 
 const IssuesTable = async ({ issues, searchParams }: Props) => {
   return (
-    <Table.Root variant="surface" mb="2">
+    <Table.Root variant="surface">
       <Table.Header>
         <Table.Row>
           {columns.map((col) => (

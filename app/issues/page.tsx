@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Flex } from "@radix-ui/themes";
 import Link from "next/link";
-import IssuesTable from "./_component/IssuesTable";
+import IssuesTable, { IssueQuery } from "./_component/IssuesTable";
 import IssueStatusFilter from "./_component/IssueStatusFilter";
 import { Issue, Status } from "@prisma/client";
 import Pagination from "../components/Pagination";
@@ -11,7 +11,7 @@ import { columnNames } from "./_component/IssuesTable";
 const pageSize = 10;
 
 interface Props {
-  searchParams: { status: Status; orderBy: keyof Issue; page: string };
+  searchParams: IssueQuery;
 }
 
 const IssuePage = async ({ searchParams }: Props) => {
@@ -40,8 +40,8 @@ const IssuePage = async ({ searchParams }: Props) => {
   const itemCount = await prisma.issue.count({ where: where });
 
   return (
-    <div>
-      <Flex mb="5" justify="between">
+    <Flex direction="column" gap="3">
+      <Flex justify="between">
         <IssueStatusFilter />
         <Button>
           <Link href="issues/new">New Issue</Link>
@@ -53,7 +53,7 @@ const IssuePage = async ({ searchParams }: Props) => {
         pageSize={pageSize}
         currentPage={currentPage}
       />
-    </div>
+    </Flex>
   );
 };
 
