@@ -3,6 +3,7 @@ import LatestIssue from "./LatestIssue";
 import IssueSummary from "./issueSummary";
 import { isAsync } from "zod";
 import { Status } from "@prisma/client";
+import IssueChart from "./IssueChart";
 
 interface Props {
   searchParams: { page: string };
@@ -24,7 +25,7 @@ const Home = async ({ searchParams }: Props) => {
   };
 
   return (
-    <IssueSummary
+    <IssueChart
       open={getStatusCount("OPEN")}
       inProgress={getStatusCount("IN_PROGRESS")}
       closed={getStatusCount("CLOSED")}
