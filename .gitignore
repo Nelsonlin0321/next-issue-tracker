@@ -35,3 +35,8 @@ yarn-error.log*
 next-env.d.ts
 .env
 git-filter-repo.py
+
+# Sentry Config File
+.sentryclirc
+app/api/sentry-example-api/route.js
+app/sentry-example-page/page.jsx
