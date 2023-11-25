@@ -7,6 +7,7 @@ import { Issue, Status } from "@prisma/client";
 import Pagination from "../components/Pagination";
 import prisma from "@/prisma/client";
 import { columnNames } from "./_component/IssuesTable";
+import { Metadata } from "next";
 
 const pageSize = 10;
 
@@ -55,6 +56,13 @@ const IssuePage = async ({ searchParams }: Props) => {
       />
     </Flex>
   );
+};
+
+export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Issue Tracker - Issue List",
+  description: "View all project issues",
 };
 
 export default IssuePage;
