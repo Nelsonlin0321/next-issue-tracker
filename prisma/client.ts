@@ -8,20 +8,21 @@
 // This only happens in development mode.
 
 // https://www.prisma.io/docs/guides/other/troubleshooting-orm/help-articles/nextjs-prisma-client-dev-practices
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from "@prisma/client";
+import { error } from "console";
 
 const prismaClientSingleton = () => {
-  return new PrismaClient()
-}
+  return new PrismaClient({ log: ["info"] });
+};
 
-type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>
+type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;
 
 const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClientSingleton | undefined
-}
+  prisma: PrismaClientSingleton | undefined;
+};
 
-const prisma = globalForPrisma.prisma ?? prismaClientSingleton()
+const prisma = globalForPrisma.prisma ?? prismaClientSingleton();
 
-export default prisma
+export default prisma;
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
