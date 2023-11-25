@@ -30,8 +30,8 @@ export default function RootLayout({
           <AuthProvider>
             <Theme accentColor="blue">
               <NavBar />
-              <main className=" p-5">
-                <Container>{children}</Container>
+              <main className="p-5">
+                <Container className="h-screen">{children}</Container>
               </main>
             </Theme>
           </AuthProvider>
