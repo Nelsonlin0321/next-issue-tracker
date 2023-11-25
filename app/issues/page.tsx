@@ -3,7 +3,7 @@ import { Button, Flex } from "@radix-ui/themes";
 import Link from "next/link";
 import IssuesTable, { IssueQuery } from "./_component/IssuesTable";
 import IssueStatusFilter from "./_component/IssueStatusFilter";
-import { Issue, Status } from "@prisma/client";
+import { Status } from "@prisma/client";
 import Pagination from "../components/Pagination";
 import prisma from "@/prisma/client";
 import { columnNames } from "./_component/IssuesTable";

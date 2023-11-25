@@ -17,6 +17,15 @@ const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/auth/signin",
     signOut: "/auth/signout",
+    error: "/auth/error",
+  },
+  callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      if (user.email) {
+        return true;
+      }
+      return false;
+    },
   },
 };
 
