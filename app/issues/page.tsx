@@ -23,7 +23,7 @@ const IssuePage = async ({ searchParams }: Props) => {
     : undefined;
 
   const orderBy = columnNames.includes(searchParams.orderBy)
-    ? { [searchParams.orderBy]: "asc" }
+    ? { [searchParams.orderBy]: "desc" }
     : undefined;
 
   const currentPage = isNaN(parseInt(searchParams.page))
@@ -58,7 +58,7 @@ const IssuePage = async ({ searchParams }: Props) => {
   );
 };
 
-export const dynamic = "force-dynamic";
+// export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Issue Tracker - Issue List",
