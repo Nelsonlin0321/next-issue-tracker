@@ -7,7 +7,7 @@ const SignoutPage = () => {
     <>
       <Card
         className="p-5 absolute m-auto left-0 right-0"
-        style={{ maxWidth: 500 }}
+        style={{ maxWidth: 320 }}
         onClick={() => signOut({ callbackUrl: "/" })}
       >
         <Box>
