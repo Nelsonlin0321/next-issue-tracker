@@ -77,7 +77,7 @@ export async function DELETE(request: NextRequest, { params }: Props) {
     return NextResponse.json({}, { status: 401 });
   }
 
-  if (["ADMIN", "EDITOR"].includes(session.user.role)) {
+  if (!["ADMIN", "EDITOR"].includes(session.user.role)) {
     return NextResponse.json(
       {
         message: "You do not have the permission to delete this issue",
