@@ -64,7 +64,7 @@ const CredentialSignIn = () => {
             <TextField.Input
               {...register("email")}
               radius="large"
-              placeholder="Enter your email"
+              placeholder="example@example.com"
             />
           </Flex>
           <Flex direction="column" gap="2">
@@ -75,7 +75,7 @@ const CredentialSignIn = () => {
             <TextField.Input
               {...register("password")}
               radius="large"
-              placeholder="Enter your password"
+              placeholder="123456"
               type="password"
             />
           </Flex>
