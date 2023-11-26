@@ -70,6 +70,7 @@ model User {
   accounts       Account[]
   sessions       Session[]
   assignedIssues Issue[]
+  role           UserRole  @default(GUEST)
 }
 
 model VerificationToken {
@@ -78,4 +79,10 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum UserRole {
+  GUEST
+  EDITOR
+  ADMIN
 }

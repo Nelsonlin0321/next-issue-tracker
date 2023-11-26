@@ -47,6 +47,7 @@ const authOptions: NextAuthOptions = {
           id: `${existedUser.id}`,
           name: existedUser.name,
           email: existedUser.email,
+          role: existedUser.role,
         };
       },
     }),
@@ -72,12 +73,13 @@ const authOptions: NextAuthOptions = {
         user: {
           ...session.user,
           name: token.name,
+          role: token.role,
         },
       };
     },
     async jwt({ token, user }) {
       if (user) {
-        return { ...token, name: user.name };
+        return { ...token, name: user.name, role: user.role };
       }
       return token;
     },
