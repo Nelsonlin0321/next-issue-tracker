@@ -45,7 +45,7 @@ const authOptions: NextAuthOptions = {
 
         return {
           id: `${existedUser.id}`,
-          username: existedUser.name,
+          name: existedUser.name,
           email: existedUser.email,
         };
       },
@@ -67,28 +67,17 @@ const authOptions: NextAuthOptions = {
       return false;
     },
     async session({ session, token }) {
-      if (session.user) {
-        session.user.name = token.name;
-      }
-      return session;
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          name: token.name,
+        },
+      };
     },
     async jwt({ token, user }) {
-      const dbUser = await prisma.user.findUnique({
-        where: { email: token.email ? token.email : undefined },
-      });
-
-      if (!dbUser) {
-        token.id = user.id;
-        return token;
-      }
-
-      if (dbUser) {
-        return {
-          id: dbUser.id,
-          name: dbUser.name,
-          email: dbUser.email,
-          image: dbUser.image,
-        };
+      if (user) {
+        return { ...token, name: user.name };
       }
       return token;
     },
