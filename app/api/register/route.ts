@@ -18,7 +18,6 @@ const userSchema = z.object({
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    console.log(body);
     const { email, username, password, confirmedPassword } =
       userSchema.parse(body);
     if (!email || !username || !password || !confirmedPassword) {

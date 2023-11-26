@@ -67,19 +67,24 @@ const AuthStatus = () => {
         Sign in
       </Link>
     );
-
   return (
     <Box>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger>
-          <Avatar
-            src={session!.user!.image!}
-            fallback="?"
-            size="2"
-            radius="full"
-            className="cursor-pointer"
-            referrerPolicy="no-referrer"
-          ></Avatar>
+          <Box>
+            <Avatar
+              src={session!.user!.image!}
+              fallback={
+                session!.user!.name
+                  ? session!.user!.name!.charAt(0).toUpperCase()
+                  : "?"
+              }
+              size="2"
+              radius="full"
+              className="cursor-pointer"
+              referrerPolicy="no-referrer"
+            ></Avatar>
+          </Box>
         </DropdownMenu.Trigger>
         <DropdownMenu.Content>
           <DropdownMenu.Label>

@@ -1,6 +1,7 @@
 "use client";
 import { Box, Button, Card, Flex, Heading, Text } from "@radix-ui/themes";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface Props {
   searchParams: { error: string };
@@ -8,6 +9,7 @@ interface Props {
 
 const SignoutPage = ({ searchParams }: Props) => {
   const error = searchParams.error;
+  const router = useRouter();
   return (
     <>
       <Card
@@ -23,7 +25,7 @@ const SignoutPage = ({ searchParams }: Props) => {
               radius="full"
               size="4"
               onClick={() => {
-                signIn("google", { callbackUrl: "/" });
+                router.push("/auth/signin");
               }}
             >
               Sign in

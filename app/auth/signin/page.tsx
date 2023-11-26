@@ -1,11 +1,15 @@
 "use client";
-import { Box, Button, Card, Flex, Text, TextField } from "@radix-ui/themes";
+import { Box, Button, Card, Flex, Text } from "@radix-ui/themes";
 import Image from "next/image";
 import googleIcon from "@/public/google.svg";
 import { signIn } from "next-auth/react";
-import Link from "next/link";
+import CredentialSignIn from "../_components/CredentialSignIn";
+import toast, { Toaster } from "react-hot-toast";
+interface Props {
+  searchParams: { error: string };
+}
 
-const SigninPage = () => {
+const SigninPage = ({ searchParams }: Props) => {
   return (
     <Card className=" p-5 mx-auto" style={{ maxWidth: 400 }}>
       <Flex direction="column" gap="5">
@@ -34,33 +38,9 @@ const SigninPage = () => {
           <Text className="whitespace-nowrap">Sign in with your email</Text>
           <hr className="w-1/2" />
         </Flex>
-        <Box id="credentials">
-          <Flex direction="column" gap="4">
-            <Flex direction="column" gap="2">
-              <label className="font-semibold">Email:</label>
-              <TextField.Input radius="large" placeholder="Enter your email" />
-            </Flex>
-            <Flex direction="column" gap="2">
-              <label className="font-semibold">Password:</label>
-              <TextField.Input
-                radius="large"
-                placeholder="Enter your password"
-                type="password"
-              />
-            </Flex>
-            <Flex gap="2" justify="end">
-              <Link href="/auth/register">
-                <Button variant="soft">
-                  <Text className=" font-bold">Create your account</Text>
-                </Button>
-              </Link>
-              <Button>
-                <Text className=" font-bold"> Sign In</Text>
-              </Button>
-            </Flex>
-          </Flex>
-        </Box>
+        <CredentialSignIn />
       </Flex>
+      <Toaster />
     </Card>
   );
 };
