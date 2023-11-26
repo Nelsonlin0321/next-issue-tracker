@@ -2,7 +2,7 @@
 import { Issue, User } from "@prisma/client";
 import { Select } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Skeleton } from "@/app/components";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -25,8 +25,11 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
       .patch(`/api/issues/${issue.id}`, {
         assignedToUserId: userId === "null" ? null : userId,
       })
-      .catch(() => {
-        toast.error("Changes could not be saved.");
+      .catch((error) => {
+        const response = (error as AxiosError).response?.data;
+        const message = (response as { message: string }).message;
+        const errorMessage = message || "Changed could not be saved";
+        toast.error(errorMessage);
       });
   };
 

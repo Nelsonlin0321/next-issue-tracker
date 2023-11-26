@@ -73,8 +73,11 @@ const IssueForm = ({ issue }: Props) => {
       reset();
       setErrorMessage("");
     } catch (error) {
+      const response = (error as AxiosError).response?.data;
+      const message = (response as { message: string }).message;
+      const errorMessage = message || "Changed could not be saved";
       setSuccessfulMessage("");
-      setErrorMessage((error as AxiosError).message);
+      setErrorMessage(errorMessage);
     } finally {
       setSubmitting(false);
     }
