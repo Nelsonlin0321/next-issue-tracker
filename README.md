@@ -1,34 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Issue Tracker with role based access control based on Google OAuth and, email and password authentication
 
-## Getting Started
+A full stack Next.js Web that views and manage issue ticker with role base access control based on Google OAuth and, email and password authentication.
+
+The real web: https://next-issue-tracker-lilac.vercel.app
 
 First, run the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Dashboard Page
+<img src="images/dashboard_page.png">
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## User Login Page
+<img src="images/login_page.png">
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## Issue Preview Page
+<img src="images/issue_page.png">
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Issue List Page
+<img src="images/issue_list_page.png">
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Issue List Page
+<img src="images/issue_edit_page.png">
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
