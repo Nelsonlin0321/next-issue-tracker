@@ -119,7 +119,7 @@ const RegisterPage = () => {
                 type="password"
               />
             </Flex>
-            <Button type="submit">
+            <Button type="submit" color="blue" variant="soft">
               {isSubmitting && <Spinner />}
               <Text className="font-bold">Create your account</Text>
             </Button>
