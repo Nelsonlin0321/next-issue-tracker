@@ -9,8 +9,18 @@ interface Props {
 
 export async function PATCH(request: NextRequest, { params }: Props) {
   const session = await getServerSession(authOptions);
+
   if (!session) {
     return NextResponse.json({}, { status: 401 });
+  }
+
+  if (!["ADMIN", "EDITOR"].includes(session.user.role)) {
+    return NextResponse.json(
+      {
+        message: "You do not have the permission to edit this issue.",
+      },
+      { status: 401 }
+    );
   }
 
   const body = await request.json();
@@ -65,6 +75,15 @@ export async function DELETE(request: NextRequest, { params }: Props) {
 
   if (!session) {
     return NextResponse.json({}, { status: 401 });
+  }
+
+  if (["ADMIN", "EDITOR"].includes(session.user.role)) {
+    return NextResponse.json(
+      {
+        message: "You do not have the permission to delete this issue",
+      },
+      { status: 401 }
+    );
   }
 
   const issueId = parseInt(params.id);
