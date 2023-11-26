@@ -120,11 +120,8 @@ const RegisterPage = () => {
               />
             </Flex>
             <Button type="submit">
-              {isSubmitting ? (
-                <Spinner />
-              ) : (
-                <Text className=" font-bold">Create your account</Text>
-              )}
+              {isSubmitting && <Spinner />}
+              <Text className="font-bold">Create your account</Text>
             </Button>
           </Flex>
         </Card>
