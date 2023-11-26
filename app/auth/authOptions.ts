@@ -2,6 +2,8 @@ import prisma from "@/prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { compare } from "bcrypt";
 
 const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -9,6 +11,44 @@ const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials, req) {
+        if (!credentials?.email || !credentials?.password) {
+          return null;
+        }
+
+        const existedUser = await prisma.user.findUnique({
+          where: { email: credentials.email },
+        });
+        if (!existedUser) {
+          return null;
+        }
+
+        if (!existedUser.password) {
+          return null;
+        }
+
+        const passwordMatch = await compare(
+          credentials.password,
+          existedUser.password
+        );
+
+        if (!passwordMatch) {
+          return null;
+        }
+
+        return {
+          id: `${existedUser.id}`,
+          username: existedUser.name,
+          email: existedUser.email,
+        };
+      },
     }),
   ],
   session: {
@@ -25,6 +65,32 @@ const authOptions: NextAuthOptions = {
         return true;
       }
       return false;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.name = token.name;
+      }
+      return session;
+    },
+    async jwt({ token, user }) {
+      const dbUser = await prisma.user.findUnique({
+        where: { email: token.email ? token.email : undefined },
+      });
+
+      if (!dbUser) {
+        token.id = user.id;
+        return token;
+      }
+
+      if (dbUser) {
+        return {
+          id: dbUser.id,
+          name: dbUser.name,
+          email: dbUser.email,
+          image: dbUser.image,
+        };
+      }
+      return token;
     },
   },
 };
