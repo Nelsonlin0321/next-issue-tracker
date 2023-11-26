@@ -1,5 +1,5 @@
 "use client";
-import { Button, Card, Flex, Heading, Text, TextField } from "@radix-ui/themes";
+import { Card, Flex, Heading, Text, TextField } from "@radix-ui/themes";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import React, { useState } from "react";
@@ -119,10 +119,13 @@ const RegisterPage = () => {
                 type="password"
               />
             </Flex>
-            <Button type="submit" color="blue" variant="soft">
+            <button
+              type="submit"
+              className="bg-transparent hover:bg-blue-500 text-blue-500 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
+            >
               {isSubmitting && <Spinner />}
               <Text className="font-bold">Create your account</Text>
-            </Button>
+            </button>
           </Flex>
         </Card>
       </form>
